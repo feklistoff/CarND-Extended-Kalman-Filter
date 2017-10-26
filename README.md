@@ -24,4 +24,4 @@ This project involves the Udacity's Term 2 Simulator which can be downloaded [he
 
 ## Results
 
-<img src="result.png" width="600px">
+<img src="ekf_result.png" width="800px">
