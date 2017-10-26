@@ -10,9 +10,9 @@ using namespace std;
 // for convenience
 using json = nlohmann::json;
 
-// Checks if the SocketIO event has JSON data.
-// If there is data the JSON object in string format will be returned,
-// else the empty string "" will be returned.
+// checks if the SocketIO event has JSON data
+// if there is data the JSON object in string format will be returned
+// else the empty string "" will be returned
 string hasData(string s) 
 {
     auto found_null = s.find("null");
@@ -33,7 +33,7 @@ int main()
 {
     uWS::Hub h;
 
-    // Create a Kalman Filter instance
+    // create a Kalman Filter instance
     FusionEKF fusionEKF;
 
     // used to compute the RMSE later
@@ -43,7 +43,7 @@ int main()
 
     h.onMessage([&fusionEKF,&tools,&estimations,&ground_truth](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) 
     {
-        // "42" at the start of the message means there's a websocket message event.
+        // "42" at the start of the message means there's a websocket message event
         // The 4 signifies a websocket message
         // The 2 signifies a websocket event
 
@@ -114,10 +114,10 @@ int main()
                     gt_values(3) = vy_gt;
                     ground_truth.push_back(gt_values);
                     
-                    //Call ProcessMeasurment(meas_package) for Kalman filter
+                    // call for Kalman filter
                     fusionEKF.ProcessMeasurement(meas_package);    	  
 
-                    //Push the current estimated x,y positon from the Kalman filter's state vectors
+                    // push the current estimated x,y positon from the Kalman filter's state vectors
                     VectorXd estimate(4);
 
                     double p_x = fusionEKF.ekf_.x_(0);
@@ -155,7 +155,7 @@ int main()
         }
     });
 
-    // We don't need this since we're not using HTTP but if it's removed the program
+    // we don't need this since we're not using HTTP but if it's removed the program
     // doesn't compile :-(
     h.onHttpRequest([](uWS::HttpResponse *res, uWS::HttpRequest req, char *data, size_t, size_t) 
     {
@@ -166,7 +166,6 @@ int main()
         }
         else
         {
-            // i guess this should be done more gracefully?
             res->end(nullptr, 0);
         }
     });
